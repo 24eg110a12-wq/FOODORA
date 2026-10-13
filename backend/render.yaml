@@ -3,6 +3,7 @@ services:
     name: foodora-backend
     env: node
     plan: free
+    rootDir: backend
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
@@ -10,9 +11,7 @@ services:
         value: production
       - key: PORT
         value: 10000
-      - key: DATABASE_URL
-        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
-        sync: false
+        value: "*"
