@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import { connectDB } from '../config/db.js';
@@ -810,11 +811,7 @@ export const seedDatabase = async () => {
     });
 
     console.log('[Seeding] Finished successfully with Indian Rupee (₹) prices!');
-    process.exit(0);
   } catch (error) {
     console.error('[Seeding Error]', error);
-    process.exit(1);
   }
 };
-
-seedDatabase();
