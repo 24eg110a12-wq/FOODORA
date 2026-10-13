@@ -15,7 +15,9 @@ dotenv.config();
 
 export const seedDatabase = async () => {
   try {
-    await connectDB();
+    if (mongoose.connection.readyState !== 1) {
+      await connectDB();
+    }
     console.log('[Seeding] Clearing old records for idempotent seed...');
 
     await Promise.all([
