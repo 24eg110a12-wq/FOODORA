@@ -25,6 +25,15 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Root Endpoint
+app.get('/', (req, res) => {
+  res.json({
+    status: 'online',
+    message: 'Welcome to FOODORA Backend API Server',
+    health: '/api/v1/health'
+  });
+});
+
 // Health Check API
 app.get('/api/v1/health', (req, res) => {
   res.json({
