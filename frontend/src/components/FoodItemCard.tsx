@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Plus, Check, Clock } from 'lucide-react';
 import { FoodItem, SelectedOption } from '../types';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 interface Props {
   item: FoodItem;
@@ -9,6 +11,8 @@ interface Props {
 
 export const FoodItemCard: React.FC<Props> = ({ item }) => {
   const { addToCart } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [selectedOptions, setSelectedOptions] = useState<SelectedOption[]>([]);
@@ -38,6 +42,12 @@ export const FoodItemCard: React.FC<Props> = ({ item }) => {
   };
 
   const handleAddToCart = async (clearExisting = false) => {
+    if (!user) {
+      setModalOpen(false);
+      navigate('/login');
+      return;
+    }
+
     try {
       setAdding(true);
       await addToCart(item._id, quantity, selectedOptions, specialInstructions, clearExisting);
