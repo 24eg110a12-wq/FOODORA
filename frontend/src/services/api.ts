@@ -33,6 +33,9 @@ export const apiRequest = async <T = any>(
 
   const json = await response.json();
   if (!response.ok) {
+    if (response.status === 401 && (json.message?.includes('Invalid token') || json.message?.includes('User not found'))) {
+      removeAuthToken();
+    }
     throw new Error(json.message || 'Something went wrong with the request');
   }
 
